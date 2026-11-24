@@ -1,3 +1,13 @@
 spring:
+  config:
+    import: "optional:file:./.env[.properties]"
   application:
     name: barber
+  datasource:
+    url: "jdbc:postgresql://127.0.0.1:${BARBER_DB_PORT:5432}/${BARBER_DB_NAME:barber}"
+    username: ${BARBER_DB_USER:barber}
+    password: ${BARBER_DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update

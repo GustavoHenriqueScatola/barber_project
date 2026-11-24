@@ -1,0 +1,18 @@
+name: barber-tests
+
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: barber_tests
+      POSTGRES_USER: barber_test
+      POSTGRES_PASSWORD: "${BARBER_TEST_DB_PASSWORD:?Defina BARBER_TEST_DB_PASSWORD em .env}"
+    ports:
+      - "127.0.0.1:${BARBER_TEST_DB_PORT:-5433}:5432"
+    tmpfs:
+      - /var/lib/postgresql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "barber_test", "-d", "barber_tests"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
